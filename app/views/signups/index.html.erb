@@ -3,10 +3,8 @@
 
 <% if flash[:errors] %>
 	<% flash[:errors].each do |e| %>
-		<p><%= e %></p>
 	<% end %>
 <% end %>
-
 
 <form action="/signups" method="post"> <%= token_tag %>
 	<p>
@@ -33,3 +31,6 @@
 	<input type="submit" value="Create">
 </form>
 <br><br>
+
+<a>Having an account?</a>
+<a href="/users"> Login</a>

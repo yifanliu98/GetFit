@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 			session[:user_id] = user.id
 			redirect_to '/home'
 		else
-			flash[:errors] = ["invalid credentials"]
+			flash[:errors] = ["Invalid Credentials"]
 			redirect_to '/users'
 		end
 
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
 	def logout
 		reset_session
-		redirect_to :root
+		redirect_to "/users"
 	end
 
 
