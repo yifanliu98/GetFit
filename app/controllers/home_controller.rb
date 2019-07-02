@@ -6,4 +6,7 @@ class HomeController < ApplicationController
 
 	end
 
+	def stopwatch
+
+	end
 end

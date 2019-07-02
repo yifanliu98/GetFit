@@ -6,5 +6,6 @@ Rails.application.routes.draw do
 	post "/signups" => "signups#create"
 	post"/users" =>"users#login"
 	get "/logout" => "users#logout"
+	get "/stopwatch" => "home#stopwatch"
 
 end

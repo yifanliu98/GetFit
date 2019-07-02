@@ -8,13 +8,12 @@
 <h1>Welcome Back, <%= user.firstname %> </h1>
 
 <br>
-<a href="/home/todaysplan">Today's Plan</a>
+<a href="/home">Today's Plan</a>
 <br>
-<a href="/home/entercalories">Update your calories</a>
+<a href="/home">Update your calories</a>
 <br>
-<a href="/home/analyzeweightchange">Analyze your weight change</a>
+<a href="/home">Analyze your weight change</a>
 <br>
-<a href="/home/stopwatch">Stopwatch</a>
-
+<%= link_to "Stopwatch", "/stopwatch"%>
 <br>
 <%= link_to "Log Out", "/logout"%>
