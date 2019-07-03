@@ -9,4 +9,7 @@ class HomeController < ApplicationController
 	def stopwatch
 
 	end
+
+	def enter_calories
+	end
 end

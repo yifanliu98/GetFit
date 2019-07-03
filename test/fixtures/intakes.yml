@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Calories: 1
+  Carbs: 1
+  Fat: 1
+  Protein: 1
+  Sodium: 1
+  Sugar: 1
+
+two:
+  Calories: 1
+  Carbs: 1
+  Fat: 1
+  Protein: 1
+  Sodium: 1
+  Sugar: 1

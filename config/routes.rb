@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 	post"/users" =>"users#login"
 	get "/logout" => "users#logout"
 	get "/stopwatch" => "home#stopwatch"
+	get "/entercalories" => "home#enter_calories"
 
 end
