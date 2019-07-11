@@ -8,5 +8,6 @@ Rails.application.routes.draw do
 	get "/logout" => "users#logout"
 	get "/stopwatch" => "home#stopwatch"
 	get "/entercalories" => "home#enter_calories"
+	get "/nearbygyms" => "nearbygyms#index"
 
 end
