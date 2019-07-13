@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 	get "/stopwatch" => "home#stopwatch"
 	get "/entercalories" => "home#enter_calories"
 	get "/analyzeweightchange" => "weightchange#analyze_weight_change"
-	post "/analyzeweightchange/weightchangeresults" => "weightchange#weight_change_results"
+	get "/analyzeweightchange/weightchangeresults" => "weightchange#weight_change_results"
 	get "/nearbygyms" => "nearbygyms#index"
 
 end

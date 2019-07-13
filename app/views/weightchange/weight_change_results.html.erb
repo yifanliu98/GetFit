@@ -20,4 +20,51 @@
 
 <body style="background-color:#87CEEB">
   <h1>Weight Change Results</h1> <br>
+  
+  <h3>The value shown is basal metabolic rate (BMR), which is the amount of energy (in calories) expended per day at rest (no exercise)</h3><br>
+  <p id="demo"></p>
+
+
+  <script>
+  function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+      vars[key] = value;
+    });
+    return vars;
+  }
+
+
+  function printResults() {
+    
+    var weight = getUrlVars()["Weight"];
+    var height = getUrlVars()["Height"];
+    var age = getUrlVars()["Age"];
+    var gender = getUrlVars()["Gender"];
+    var BMR;
+    
+    if (gender = "male") {
+      var BMR = 10*weight + 6.25*height -5*age + 5;
+      return BMR;
+    }
+    else {
+      var BMR = 10*weight + 6.25*height -5*age - 161;
+      return BMR;
+    }
+  }
+  document.getElementById("demo").innerHTML = printResults();
+  </script>
+
+
 </body>
+
+
+
+
+
+
+
+
+
+
+
