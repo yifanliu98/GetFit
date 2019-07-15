@@ -37,22 +37,70 @@
       }
     </style>
   </head>
+
+  <h1>Enter your location</h1>
+  <form onsubmit="">
+  <input type="text" name="location"><br>
+  <input type="submit" value="Submit">
+</form>
+<br><br><br>
+
+
   <body>
     <div id="map"></div>
     <script>
       var map;
+      var service;
+      var infowindow;
+
       function initMap() {
+        var burnaby = new google.maps.LatLng(49.2488,-122.9805);
+
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
+            center: burnaby,
+            zoom: 13
+          });
+
+        var request = {
+          location: burnaby,
+          radius: '500',
+          query: 'gym',
+          fields: ['name', 'geometry']
+        };
+
+        service = new google.maps.places.PlacesService(map);
+        service.findPlaceFromQuery(request, function(results, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+              createMarker(results[i]);
+            }
+
+            map.setCenter(burnaby);
+        }});
+      }
+
+      function createMarker(place) {
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(place.name);
+          infowindow.open(map, this);
         });
       }
+
+      // function callback(results, status) {
+      //   if (status == google.maps.places.PlacesServiceStatus.OK) {
+      //     for (var i = 0; i < results.length; i++) {
+      //       var place = results[i];
+      //       createMarker(results[i]);
+      //     }
+      //   }
+      // }
+
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initMap"
     async defer></script>
-  </body>  <br><br>
-  <h1>Enter your location</h1>
-  <form action="">
-  <input type="text" name="location"><br>
-  <input type="submit" value="Submit">
-</form>
+  </body>
