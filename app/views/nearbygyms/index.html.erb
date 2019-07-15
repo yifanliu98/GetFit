@@ -16,7 +16,6 @@
     </nav>
   </div>
 </header>
-</html>
 
 <br><br><br><br>
   <head>
@@ -38,12 +37,14 @@
     </style>
   </head>
 
-  <h1>Enter your location</h1>
-  <form onsubmit="">
-  <input type="text" name="location"><br>
-  <input type="submit" value="Submit">
-</form>
-<br><br><br>
+  <h1>Enter your City</h1>
+  <input type="text" name="location" id="City"><br>
+  <input id="submit" type="button" value="Submit">
+
+<!-- <script>
+  var input = document.getElementById("City").value;
+</script>
+ --><br><br><br>
 
 
   <body>
@@ -56,17 +57,25 @@
       function initMap() {
         var burnaby = new google.maps.LatLng(49.2488,-122.9805);
 
+        infowindow = new google.maps.InfoWindow();
+
         map = new google.maps.Map(document.getElementById('map'), {
             center: burnaby,
-            zoom: 13
+            zoom: 10
           });
+
+        var geocoder = new google.maps.Geocoder();
 
         var request = {
           location: burnaby,
           radius: '500',
-          query: 'gym',
+          query: 'gyms',
           fields: ['name', 'geometry']
         };
+
+        document.getElementById('submit').addEventListener('click', function() {
+          geocodeAddress(geocoder, map);
+        })
 
         service = new google.maps.places.PlacesService(map);
         service.findPlaceFromQuery(request, function(results, status) {
@@ -74,10 +83,9 @@
             for (var i = 0; i < results.length; i++) {
               createMarker(results[i]);
             }
-
-            map.setCenter(burnaby);
-        }});
-      }
+          }
+      });
+    }
 
       function createMarker(place) {
         var marker = new google.maps.Marker({
@@ -91,16 +99,19 @@
         });
       }
 
-      // function callback(results, status) {
-      //   if (status == google.maps.places.PlacesServiceStatus.OK) {
-      //     for (var i = 0; i < results.length; i++) {
-      //       var place = results[i];
-      //       createMarker(results[i]);
-      //     }
-      //   }
-      // }
+      function geocodeAddress(geocoder, resultsMap) {
+        var City = document.getElementById('City').value;
+        geocoder.geocode({'City': City}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            resultsMap.setZoom(13);
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initMap"
-    async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACHUQBMSFjirohUFI2pJhngKf5wsFoC9o&libraries=places&callback=initMap" async defer></script>
   </body>
+  </html>
