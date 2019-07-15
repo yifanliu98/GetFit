@@ -1,0 +1,89 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <% user = User.find_by(id:session[:user_id])%>
+    <nav>
+      <ul class="nav navbar-nav navbar-left">
+        <li><img class="mb-4" src="logo.png" alt="logo" width="72" height="72"></li> 
+        <li><%= link_to "Todaysplan",'#' %></li>
+        <li><%= link_to "Entercalories",'#' %></li>
+        <li><%= link_to "analyzeweightchange",'#' %></li>
+        <li><%= link_to "Home", "/home" %></li>
+        <li><%= link_to "Log Out","/logout" %></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<br><br><br><br><br><br><br>
+
+<body style="background-color:#87CEEB">
+    <div class="stopwatch text-center">
+        <h1>Hello Stopwatch!</h1> <br>
+        <button class="btn btn-success start">Start</button>
+        <button class="btn btn-warning stop">Stop</button>
+        <button class="btn btn-primary reset">Reset</button>
+        <br><br>
+        <span class="minutes" style="font-size:100px">00</span><span style="font-size:100px">:</span><span class="seconds" style="font-size:100px">00</span>
+        <span style="font-size:100px">:</span><span class="centiseconds" style="font-size:100px">00</span> <br>
+    </div>
+
+    <script type='text/javascript'>
+    var ss = document.getElementsByClassName('stopwatch');
+
+    [].forEach.call(ss, function (s) {
+    var current = 0,
+        interval = 0,
+        old = new Date().getTime(),
+        start = $('button.start'),
+        stop = $('button.stop'),
+        reset = $('button.reset'),
+        min = s.querySelector('span.minutes'),
+        sec = s.querySelector('span.seconds'),
+        cent = s.querySelector('span.centiseconds');
+
+
+        function int_to_time_string (n) {
+            if (n > 9) {
+                return n.toString()
+            }
+            else 
+                return "0" + n.toString()
+        }
+
+        function display_time () {
+            var now = new Date().getTime(),
+            difference = now - old;
+            current += difference;
+            var time = new Date(current);
+            min.innerHTML = int_to_time_string(time.getMinutes());
+            sec.innerHTML = int_to_time_string(time.getSeconds());
+            cent.innerHTML = int_to_time_string(Math.floor(time.getMilliseconds() / 10));
+            old = now;
+        }
+
+        function startClock () {
+            if (interval == 0) {
+                old = new Date().getTime();
+                interval = setInterval(display_time, 10);
+            }
+        }
+
+        function stopClock () {
+            clearInterval(interval);
+            interval = 0;
+        }
+
+        function resetClock () {
+            stopClock();
+            current = 0;
+            min.innerHTML = sec.innerHTML = cent.innerHTML = "00";
+        }
+
+        start.click(startClock);
+        stop.click(stopClock);
+        reset.click(resetClock);
+    });
+    </script>
+
+</body>
+
