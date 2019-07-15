@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+<<<<<<< HEAD
 	
 	resources :todo_lists do
 		resources :todo_items do
@@ -24,3 +25,19 @@ Rails.application.routes.draw do
 
 
 end
+=======
+	root "users#index"
+	get "/users" => "users#index"
+	get "/home" => "home#index"
+	get "/signups" => "signups#index"
+	post "/signups" => "signups#create"
+	post"/users" =>"users#login"
+	get "/logout" => "users#logout"
+	get "/stopwatch" => "home#stopwatch"
+	get "/entercalories" => "home#enter_calories"
+	get "/analyzeweightchange" => "weightchange#analyze_weight_change"
+	get "/analyzeweightchange/weightchangeresults" => "weightchange#weight_change_results"
+	get "/nearbygyms" => "nearbygyms#index"
+
+end
+>>>>>>> fa52d1c993abdfced59076e0ce7bee47d6e5d824

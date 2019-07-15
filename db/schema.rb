@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2019_07_15_230619) do
 
   create_table "todo_items", force: :cascade do |t|
@@ -25,6 +26,17 @@ ActiveRecord::Schema.define(version: 2019_07_15_230619) do
     t.string "title"
     t.string "string"
     t.text "description"
+=======
+ActiveRecord::Schema.define(version: 2019_07_03_001830) do
+
+  create_table "intakes", force: :cascade do |t|
+    t.integer "Calories"
+    t.integer "Carbs"
+    t.integer "Fat"
+    t.integer "Protein"
+    t.integer "Sodium"
+    t.integer "Sugar"
+>>>>>>> fa52d1c993abdfced59076e0ce7bee47d6e5d824
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

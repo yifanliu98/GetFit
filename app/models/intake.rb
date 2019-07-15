@@ -1,0 +1,2 @@
+class Intake < ApplicationRecord
+end
