@@ -18,26 +18,24 @@
 
 <br><br><br>
 <p id="notice"><%= notice %></p>
-
-<h1>Todo Lists</h1>
-<table>
-  <thead>
+ <body style="background-color:#87CEEB">
+ <h1>Todo Lists</h1>
+ <table>
+   <thead>
     <tr>
       <th>Title</th>
-      <th>String</th>
       <th>Description</th>
       <th colspan="3"></th>
     </tr>
-  </thead>
+   </thead>
 
   <tbody>
     <% @todo_lists.each do |todo_list| %>
       <tr>
         <td><%= todo_list.title %></td>
-        <td><%= todo_list.string %></td>
         <td><%= todo_list.description %></td>
-        <td><%= link_to 'Show', todo_list %></td>
-        <td><%= link_to 'Edit', edit_todo_list_path(todo_list) %></td>
+        <p &nvsp> <%= link_to 'Show', todo_list %></td></p>
+        <td>%= link_to 'Edit', edit_todo_list_path(todo_list) %></td>
         <td><%= link_to 'Destroy', todo_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
