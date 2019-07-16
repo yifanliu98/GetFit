@@ -10,14 +10,14 @@ class UsersController < ApplicationController
 			redirect_to '/home'
 		else
 			flash[:errors] = ["Invalid Credentials"]
-			redirect_to '/users'
+			redirect_to root_path
 		end
 
 	end
 
 	def logout
 		reset_session
-		redirect_to "/users"
+		redirect_to root_path
 	end
 
 

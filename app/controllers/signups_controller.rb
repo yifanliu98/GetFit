@@ -9,7 +9,7 @@ class SignupsController < ApplicationController
 
 		if user.save
 			flash[:errors] = ["Sign up successfully, please login first"]
-			redirect_to "/users"
+			redirect_to root_path
 		else
 			flash[:errors] = user.errors.full_messages
 			redirect_to "/signups"
