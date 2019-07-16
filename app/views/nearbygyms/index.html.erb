@@ -18,74 +18,18 @@
   </div>
 </header>
 <br><br><br>
-  <head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
 
-  <h1>Enter your City</h1>
-  <input type="text" name="location" id="City"><br>
-  <input id="submit" type="button" value="Submit">
+<!--       var service;
 
-<!-- <script>
-  var input = document.getElementById("City").value;
-</script>
- --><br><br><br>
-
-
-  <body>
-    <div id="map"></div>
-    <script>
-      var map;
-      var service;
-      var infowindow;
-
-      function initMap() {
-        var burnaby = new google.maps.LatLng(49.2488,-122.9805);
-
-        infowindow = new google.maps.InfoWindow();
-
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: burnaby,
-            zoom: 10
-          });
-
-        var geocoder = new google.maps.Geocoder();
-
-        var request = {
-          location: burnaby,
-          radius: '500',
-          query: 'gyms',
-          fields: ['name', 'geometry']
-        };
-
-        document.getElementById('submit').addEventListener('click', function() {
-          geocodeAddress(geocoder, map);
-        })
-
-        service = new google.maps.places.PlacesService(map);
-        service.findPlaceFromQuery(request, function(results, status) {
-          if (status === google.maps.places.PlacesServiceStatus.OK) {
-            for (var i = 0; i < results.length; i++) {
-              createMarker(results[i]);
-            }
-          }
-      });
-    }
+         service = new google.maps.places.PlacesService(map);
+         service.findPlaceFromQuery(request, function(results, status) {
+           if (status === google.maps.places.PlacesServiceStatus.OK) {
+             for (var i = 0; i < results.length; i++) {
+               createMarker(results[i]);
+             }
+           }
+       }); -->
+<!--     }
 
       function createMarker(place) {
         var marker = new google.maps.Marker({
@@ -97,21 +41,121 @@
           infowindow.setContent(place.name);
           infowindow.open(map, this);
         });
+      } -->
+
+<head>
+    <title>Nearby Gyms</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+        border-top: 5px solid black;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: lightgreen;
+      }
+
+      h1 {
+        text-align: center;
+        font-family: Georgia;
+        font-size: 200%;
+        border: 5px solid black;
+        background-color: lightyellow;
+        padding: 15px;
+      }
+
+      #address, #submit {
+        font-family: Georgia;
+        font-size: 100%;
+        border: 1px solid black;
+        background-color: lightyellow;
+        padding: 10px;
+        text-align: center;
+
+      }
+
+    </style>
+  </head>
+
+  <h1>Enter your City</h1>
+  <input type="textbox" id="address"><br><br>
+  <input id="submit" type="button" value="Search">
+  <br><br>
+
+  <body>
+
+    <div id="map"></div>
+    <script>
+      function initMap() {
+
+        var burnaby = new google.maps.LatLng(49.2488,-122.9805);
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 10,
+          center: burnaby
+        });
+        var geocoder = new google.maps.Geocoder();
+
+        document.getElementById('submit').addEventListener('click', function() {
+          geocodeAddress(geocoder, map);
+        });
       }
 
       function geocodeAddress(geocoder, resultsMap) {
-        var City = document.getElementById('City').value;
-        geocoder.geocode({'City': City}, function(results, status) {
+        var address = document.getElementById('address').value;
+
+        var request = {
+          location: address,
+          radius: '10000',
+          query: 'gym'
+        };
+        //problem is here
+        var service = new google.maps.places.PlacesService(map);
+
+        geocoder.geocode({'address': address}, function(results, status) {
           if (status === 'OK') {
             resultsMap.setCenter(results[0].geometry.location);
-            resultsMap.setZoom(13);
+            resultsMap.setZoom(12);
           } else {
-            alert('Geocode was not successful for the following reason: ' + status);
+            alert('Unsuccessful: ' + status);
           }
+          //problem is here
+          service.textSearch(request, callback);
+
+        });
+      }
+
+      function callback(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+        var place = results[i];
+        createMarker(results[i]);
+        }
+      }
+    }
+
+      function createMarker(place) {
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+        });
+
+        var infowindow;
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(place.name);
+          infowindow.open(map, this);
         });
       }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACHUQBMSFjirohUFI2pJhngKf5wsFoC9o&libraries=places&callback=initMap" async defer></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpULkQ0yNnbKywnfmz8BcvrnGAdtk6qFk&libraries=places&callback=initMap" async defer></script>
   </body>
-  </html>
