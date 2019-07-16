@@ -4,10 +4,10 @@ class UsersController < ApplicationController
 	end
 
 	def login
-		user = User.find_by(email:login_params[:email])
-		if user && user.authenticate(login_params[:password])
+		user = User.find_by(email:params[:login][:email])
+		if user && user.authenticate(params[:login][:password])
 			session[:user_id] = user.id
-			redirect_to '/home'
+			redirect_to home_path
 		else
 			flash[:errors] = ["Invalid Credentials"]
 			redirect_to root_path
