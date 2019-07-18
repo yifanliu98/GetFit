@@ -84,70 +84,90 @@
     </style>
   </head>
 
-  <h1>Enter your City</h1>
+  <h1>Enter your address</h1>
   <input type="textbox" id="address"><br><br>
   <input id="submit" type="button" value="Search">
+  <br><br>
+
+  <form action="">
+    <input type="button" id="distance" value="1 km" onclick="changeDistance(1000,14)">
+    <input type="button" id="distance" value="5 km" onclick="changeDistance(5000,13)">
+    <input type="button" id="distance" value="10 km" onclick="changeDistance(10000,12)">
+  </form>
+
   <br><br>
 
   <body>
 
     <div id="map"></div>
     <script>
+
+      var map;
+      var service;
+      var infowindow;
+      var geoCity;
+      var markers = [];
+
       function initMap() {
-
         var burnaby = new google.maps.LatLng(49.2488,-122.9805);
-
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 10,
-          center: burnaby
-        });
         var geocoder = new google.maps.Geocoder();
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: burnaby,
+          zoom: 13
+        });
 
         document.getElementById('submit').addEventListener('click', function() {
           geocodeAddress(geocoder, map);
+
         });
       }
 
       function geocodeAddress(geocoder, resultsMap) {
         var address = document.getElementById('address').value;
 
-        var request = {
-          location: address,
-          radius: '10000',
-          query: 'gym'
-        };
-        //problem is here
-        var service = new google.maps.places.PlacesService(map);
-
         geocoder.geocode({'address': address}, function(results, status) {
           if (status === 'OK') {
+            geoCity = new google.maps.LatLng((results[0]).geometry.location.lat(), (results[0]).geometry.location.lng());
+
             resultsMap.setCenter(results[0].geometry.location);
-            resultsMap.setZoom(12);
+            resultsMap.setZoom(14);
+
+            var request = {
+              location: geoCity,
+              radius: '1000',
+              query: 'gym'
+            };
+
+            service = new google.maps.places.PlacesService(map);
+            service.textSearch(request, callback);
+
+            //HOW DO YOU CHANGE YOUR MARKER COLOR??????
+            //var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+            // var marker = new google.maps.Marker({
+            //   map: resultsMap,
+            //   position: results[0].geometry.location
+              //HOW DO YOU CHANGE YOUR MARKER COLOR??????
+              // icon: { url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" }
+            //});
+
           } else {
-            alert('Unsuccessful: ' + status);
+            window.alert('Unsuccessful: ' + status);
           }
-          //problem is here
-          service.textSearch(request, callback);
 
         });
+
       }
 
-      function callback(results, status) {
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-        var place = results[i];
-        createMarker(results[i]);
-        }
-      }
-    }
-
-      function createMarker(place) {
+      //HOW DOU CHANGE FLAG COLORS????????
+      function yourlocation(location) {
         var marker = new google.maps.Marker({
           map: map,
           position: place.geometry.location
+          //icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
         });
 
-        var infowindow;
+        markers.push(marker);
 
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.setContent(place.name);
@@ -155,7 +175,57 @@
         });
       }
 
+      function callback(results, status) {
+        setMapOnAll(null);
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+          var place = results[i];
+          createMarker(place);
+          }
+        }
+      }
+
+      function createMarker(place) {
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+        });
+
+        markers.push(marker);
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(place.name);
+          infowindow.open(map, this);
+        });
+      }
+
+      function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+      }
+
+      function deleteMarkers() {
+        setMapOnAll(null);
+        markers = [];
+      }
+
+      function changeDistance(distance, zoomlevel) {
+        map.setZoom(zoomlevel);
+        map.setCenter(geoCity);
+
+        var request = {
+          location: geoCity,
+          radius: distance,
+          query: 'gym'
+        };
+
+        service = new google.maps.places.PlacesService(map);
+        service.textSearch(request, callback);
+      }
+
     </script>
-    <script async defer
+    <script
     src="https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initMap" async defer></script>
   </body>
+</html>
