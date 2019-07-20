@@ -25,5 +25,7 @@ Rails.application.routes.draw do
  	get "todo_list_todo_items" => "todo_items#index"
  	post "todo_list_todo_items" => "todo_items#create"
 
+ 	get "/admin" => "admin#index"
+
 end
 
