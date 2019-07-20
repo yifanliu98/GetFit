@@ -8,6 +8,7 @@
         <li><img class="mb-4" src="logo.png" alt="logo" width="72" height="72"></li>
         <li><%= link_to "Todaysplan", "/todo_lists" %></li>
         <li><%= link_to "Discover your BMR","/analyzeweightchange" %></li>
+        <li><%= link_to "Nutritional Value", "/nutritional_value" %></li>
         <li><%= link_to "Nearby Gyms", "/nearbygyms" %></li>
         <li><%= link_to "Stopwatch", "/stopwatch" %></li>
         <li><%= link_to "Home", "/home" %></li>
@@ -20,7 +21,7 @@
 <br><br><br>
 
 <!--       var service;
-
+	
          service = new google.maps.places.PlacesService(map);
          service.findPlaceFromQuery(request, function(results, status) {
            if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -62,37 +63,85 @@
         background-color: lightgreen;
       }
 
+      * {
+        box-sizing: border-box;
+      }
+
       h1 {
-        text-align: center;
+        text-align: left;
         font-family: Georgia;
         font-size: 200%;
         border: 5px solid black;
         background-color: lightyellow;
         padding: 15px;
+        margin-left: 15px;
+        width: 24%;
+        position: relative;
+        margin-bottom: 20px;
       }
 
-      #address, #submit {
+      #address {
         font-family: Georgia;
         font-size: 100%;
         border: 1px solid black;
         background-color: lightyellow;
         padding: 10px;
         text-align: center;
+        margin-left: 15px;
+        margin-right: 50%;
+        position: relative;
+        margin-bottom: 20px;
+        /*width: 50%;*/
 
       }
+
+      #submit {
+        font-family: Georgia;
+        font-size: 100%;
+        border: 1px solid black;
+        background-color: lightyellow;
+        padding: 10px;
+        text-align: center;
+        margin-left: 15px;
+        margin-right: 50%;
+        width: 10%;
+        position: relative;
+        margin-bottom: 20px;
+
+      }
+
+      .togym {
+        /* Full height */
+        height: 70%;
+        width: 100%; 
+        position: absolute;
+
+        background-image: url("walking.jpg");
+
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        /*margin-left: 50%;
+*/      }
 
     </style>
   </head>
 
+<body>
+  <div class="togym"></div>
   <h1>Enter your address</h1>
   <input type="textbox" id="address"><br><br>
   <input id="submit" type="button" value="Search">
   <br><br>
+</body>
 
   <form action="">
-    <input type="button" id="distance" value="1 km" onclick="changeDistance(1000,14)">
-    <input type="button" id="distance" value="5 km" onclick="changeDistance(5000,13)">
-    <input type="button" id="distance" value="10 km" onclick="changeDistance(10000,12)">
+
+    <input type="button" id="distance" value="1 km" style="margin-left: 15px; position: relative;" onclick="changeDistance(1000,14)">
+    <input type="button" id="distance" value="5 km" style="position: relative;" onclick="changeDistance(5000,13)">
+    <input type="button" id="distance" value="10 km" style="position: relative;" onclick="changeDistance(10000,12)">
+
   </form>
 
   <br><br>
@@ -100,13 +149,15 @@
   <body>
 
     <div id="map"></div>
+
     <script>
 
       var map;
       var service;
-      var infowindow;
+      // var infowindow;
       var geoCity;
       var markers = [];
+      var getNextPage = null;
 
       function initMap() {
         var burnaby = new google.maps.LatLng(49.2488,-122.9805);
@@ -142,14 +193,7 @@
             service = new google.maps.places.PlacesService(map);
             service.textSearch(request, callback);
 
-            //HOW DO YOU CHANGE YOUR MARKER COLOR??????
-            //var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-            // var marker = new google.maps.Marker({
-            //   map: resultsMap,
-            //   position: results[0].geometry.location
-              //HOW DO YOU CHANGE YOUR MARKER COLOR??????
-              // icon: { url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" }
-            //});
+            yourlocation(geoCity);
 
           } else {
             window.alert('Unsuccessful: ' + status);
@@ -161,11 +205,15 @@
 
       //HOW DOU CHANGE FLAG COLORS????????
       function yourlocation(location) {
+      	var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
         var marker = new google.maps.Marker({
           map: map,
-          position: place.geometry.location
-          //icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+          position: location,
+          icon: image
+
         });
+
+        var infowindow = new google.maps.InfoWindow();
 
         markers.push(marker);
 
@@ -193,8 +241,11 @@
 
         markers.push(marker);
 
+        var infowindow = new google.maps.InfoWindow();
+
         google.maps.event.addListener(marker, 'click', function() {
-          infowindow.setContent(place.name);
+          infowindow.setContent(place.name + '<br>' + 
+          	place.formatted_address);
           infowindow.open(map, this);
         });
       }
@@ -226,6 +277,6 @@
 
     </script>
     <script
-    src="https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initMap" async defer></script>
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABQA3nJpRyOgfXiNTHEFplrFHQ-MFnx9k&libraries=places&callback=initMap" async defer></script>
   </body>
 </html>
