@@ -5,7 +5,7 @@
       <ul class="nav navbar-nav navbar-left">
         <li><img class="mb-4" src="logo.png" alt="logo" width="72" height="72"></li>
         <li><%= link_to "Todaysplan", "/todo_lists" %></li>
-        <li><%= link_to "Discover your BMR","/analyzeweightchange" %></li>
+        <li><%= link_to "Daily Calorie Intake","/analyzeweightchange" %></li>
         <li><%= link_to "Nearby Gyms", "/nearbygyms" %></li>
         <li><%= link_to "Stopwatch", "/stopwatch" %></li>
         <li><%= link_to "Home", "/home" %></li>
@@ -17,9 +17,12 @@
 </header>
 <br><br><br>
 <style>
+  h1 {
+  text-align: center;
+  }
   form {
     margin: 0 auto;
-    width: 200px;
+    width: 300px;
     padding: 1em;
     border: 0px solid #CCC;
     border-radius: 1em;
@@ -30,14 +33,15 @@
 
   label {
     display: inline-block;
-    width: 150px;
+    width: 300px;
     text-align: center;
   }
   input, textarea {
     font: 1em sans-serif;
-    width: 150px;
+    width: 100%;
     box-sizing: border-box;
     border: 1px solid #999;
+    text-align: center;
   }
   input:focus, textarea:focus {
     border-color: #000;
@@ -46,18 +50,14 @@
     vertical-align: top;
     height: 5em;
   }
-  .button {
-    padding-left: 90px;
+  select {
+    text-align: center;
+    width: 100%;
   }
-  button {
-    margin-left: .5em;
-  }
-
-
 </style>
 
 <body style="background-color:#87CEEB">
-  <h1>Discover your BMR</h1> <br>
+  <h1>Daily Calorie Intake Calculator</h1> <br>
   <form name="WeightChange" action="/analyzeweightchange/weightchangeresults", method="get">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
@@ -68,6 +68,15 @@
     <label for="Age">Age</label>
     <input type="number" name="Age" min=1 max=130 required=required><br><br>
     
+    <select name="CalorieMultiplier">
+      <option value="BMR">Basal Metabolic Rate (BMR)</option>
+      <option value="sedentary">Sedentary (little or no exercise)</option>
+      <option value="light">Lightly Active (light exercise or sports 1-3 days/week)</option>
+      <option value="moderate">Moderately Active (moderate exercise 3-5 days/week)</option>
+      <option value="hard">Very Active (hard exercise 6-7 days/week)</option>
+      <option value="extreme">Extremely Active (very hard exercise and a physical job)</option>
+    </select>
+
 
     <label for="male">Male</label>
     <input type="radio" name="Gender" id="male" value="male" required=required><br>
