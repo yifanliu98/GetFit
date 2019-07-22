@@ -1,19 +1,27 @@
+<%= stylesheet_link_tag 'todo'%>
+<body>
+<div class="container">
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <p id="notice"><%= notice %></p>
-<p>
-  <strong>Title:</strong>
-  <%= @todo_list.title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @todo_list.description %>
-</p>
-
+<h2 class="todo_list_title"><%= @todo_list.title %></h2>
+<p class="todo_list_sub_title"><%= @todo_list.description %></p>
 <div id="todo_items_wrapper">
  <%= render @todo_list.todo_items %>
  <div id="form">
   <%= render "todo_items/form" %>
  </div>
 </div>
-<%= link_to 'Edit', edit_todo_list_path(@todo_list) %> 
-<%= link_to 'Back', todo_lists_path %>
+
+<div class ="links">
+ <%= link_to 'Edit', edit_todo_list_path(@todo_list) %>
+ &nbsp|&nbsp
+ <%= link_to 'Delete', todo_list_path(@todo_list), method: :delete, data: { confirm: "Are you sure?" } %>
+ &nbsp|&nbsp
+ <%= link_to 'Back', todo_lists_path %>
+ &nbsp|&nbsp
+ <%=link_to 'Home', home_path %>
+</div>
+<%= yield %>
+  </body>
+</html>
