@@ -120,12 +120,63 @@
 
   <script>
 
-      var food_item;
+    var request = require("request");
+    clientID = 'bec66aabbc5740f19b17f56402387468'
+    clientSecret = '16b672347bfb4f6a88a168ecfb421318'
 
-      function init() {
+    var options = { 
+    method: 'POST',
+    url: 'https://oauth.fatsecret.com/connect/token',
+    method : 'POST',
+    auth : {
+        user : clientID, 
+        password : clientSecret
+    },
+    headers: { 'content-type': 'application/json'},
+    form: {
+        'grant_type': 'client_credentials',
+       'scope' : 'basic'
+    },
+    json: true 
+  };
 
-        food_item = document.getElementById('item').value;
-      }
+  request(options, function (error, response, body) {
+     if (error) throw new Error(error);
+
+    console.log(body);
+  });
+
+
+      //var food_item;
+
+      //function init() {
+
+        // food_item = document.getElementById('item').value;
+        // // var request = {
+        // //     "appId":"f1a2b4c0",
+        // //     "appKey":"fa06ab588b0866fb397c8c014033d601",
+        // //     "query": JSON.stringify(food_item)
+        // // }
+
+        // xhr = new XMLHttpRequest();
+        // var url = "https://api.nutritionix.com/v1_1/search";
+        // xhr.open("POST", url, true);
+        // xhr.setRequestHeader("Content-type", "application/json");
+
+        // // xhr.onreadystatechange = function () { 
+        // //     if (xhr.readyState == 4 && xhr.status == 200) {
+        // //         var json = JSON.parse(xhr.responseText);
+        // //         window.alert(json.foods[0] + ", " + json.foods[1])
+        // //     }
+        // // }
+
+        // xhr.send(JSON.stringify(request));
+        // window.alert(xhr.responseText);
+        // var json = JSON.parse(xhr.responseText);
+        // window.alert(json.foods[0] + ", " + json.foods[1])
+
+
+      //}
 
 
      

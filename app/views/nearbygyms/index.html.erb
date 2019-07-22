@@ -160,6 +160,7 @@
       var getNextPage = null;
 
       function initMap() {
+        setMapOnAll(null);
         var burnaby = new google.maps.LatLng(49.2488,-122.9805);
         var geocoder = new google.maps.Geocoder();
 
@@ -169,12 +170,14 @@
         });
 
         document.getElementById('submit').addEventListener('click', function() {
-          geocodeAddress(geocoder, map);
+          geocodeAddress(geocoder, map, 1000, 14);
 
         });
       }
 
-      function geocodeAddress(geocoder, resultsMap) {
+
+      function geocodeAddress(geocoder, resultsMap, distance, zoomlevel) {
+        setMapOnAll(null);
         var address = document.getElementById('address').value;
 
         geocoder.geocode({'address': address}, function(results, status) {
@@ -182,11 +185,11 @@
             geoCity = new google.maps.LatLng((results[0]).geometry.location.lat(), (results[0]).geometry.location.lng());
 
             resultsMap.setCenter(results[0].geometry.location);
-            resultsMap.setZoom(14);
+            resultsMap.setZoom(zoomlevel);
 
             var request = {
               location: geoCity,
-              radius: '1000',
+              radius: distance,
               query: 'gym'
             };
 
@@ -218,13 +221,13 @@
         markers.push(marker);
 
         google.maps.event.addListener(marker, 'click', function() {
-          infowindow.setContent(place.name);
+          infowindow.setContent("Your location");
           infowindow.open(map, this);
         });
       }
 
       function callback(results, status) {
-        setMapOnAll(null);
+        //setMapOnAll(null);
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           for (var i = 0; i < results.length; i++) {
           var place = results[i];
@@ -262,21 +265,13 @@
       }
 
       function changeDistance(distance, zoomlevel) {
-        map.setZoom(zoomlevel);
-        map.setCenter(geoCity);
 
-        var request = {
-          location: geoCity,
-          radius: distance,
-          query: 'gym'
-        };
-
-        service = new google.maps.places.PlacesService(map);
-        service.textSearch(request, callback);
+        var geocoder1 = new google.maps.Geocoder();
+        geocodeAddress(geocoder1, map, distance, zoomlevel);
       }
 
     </script>
     <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABQA3nJpRyOgfXiNTHEFplrFHQ-MFnx9k&libraries=places&callback=initMap" async defer></script>
+    src="https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initMap" async defer></script>
   </body>
 </html>
