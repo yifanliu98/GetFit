@@ -25,8 +25,9 @@ Rails.application.routes.draw do
  	get "todo_list_todo_items" => "todo_items#index"
  	post "todo_list_todo_items" => "todo_items#create"
  	get "/nutritional_value" => "nutritional_value#index"
-
  	get "/admin" => "admin#index"
+
+ 	resources :activations, only: [:edit]
 
 end
 
