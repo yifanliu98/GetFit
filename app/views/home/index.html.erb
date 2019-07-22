@@ -3,9 +3,9 @@
 
     <nav>
       <ul class="nav navbar-nav navbar-left">
-        <li><img class="mb-4" src="logo.png" alt="logo" width="110" height="72"></li>
+        <li><img class="mb-4" src="logo.png" alt="logo" width="130" height="72"></li>
         <li><%= link_to "Todaysplan", "/todo_lists" %></li>
-        <li><%= link_to "Discover your BMR","/analyzeweightchange" %></li>
+        <li><%= link_to "Daily Calorie Intake","/analyzeweightchange" %></li>
         <li><%= link_to "Nearby Gyms", "/nearbygyms" %></li>
         <li><%= link_to "Nutritional Value", "/nutritional_value" %></li>
         <li><%= link_to "Stopwatch", "/stopwatch" %></li>
@@ -19,7 +19,7 @@
 
 <body background="pic.jpeg">
   <% user = User.find_by(id:session[:user_id])%>
-  <div class="center jumbotron">
+  <div class="center jumbotron text-center">
     <br><br><h2>Welcome Back, <%= user.firstname %> </h2>
   </div>
 </body>

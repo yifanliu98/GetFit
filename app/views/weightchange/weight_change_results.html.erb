@@ -7,6 +7,7 @@
         <li><%= link_to "Todaysplan", "/todo_lists" %></li>
         <li><%= link_to "Discover your BMR","/analyzeweightchange" %></li>
         <li><%= link_to "Nutritional Value", "/nutritional_value" %></li>
+        <li><%= link_to "Daily Calorie Intake","/analyzeweightchange" %></li>
         <li><%= link_to "Nearby Gyms", "/nearbygyms" %></li>
         <li><%= link_to "Stopwatch", "/stopwatch" %></li>
         <li><%= link_to "Home", "/home" %></li>
@@ -18,11 +19,22 @@
 </header>
 <br><br><br>
 
+<style>
+  h1 {
+  text-align: center;
+  }
+  h2 {
+  text-align: center;
+  }
+
+</style>
+
 <body style="background-color:#87CEEB">
-  <h1>BMR Results</h1> <br>
+  <h1>Calorie Intake Results</h1> <br>
   
-  <h3>The value shown is basal metabolic rate (BMR), which is the amount of energy (in calories) expended per day at rest (no exercise)</h3><br>
-  <p id="demo"></p>
+  <h2>To maintain your current weight you require a daily intake of</h2><br>
+  <h2 id="demo"></h2>
+  <h2>Calories</h2>
 
 
   <script>
@@ -41,16 +53,39 @@
     var height = getUrlVars()["Height"];
     var age = getUrlVars()["Age"];
     var gender = getUrlVars()["Gender"];
+    var calories = getUrlVars()["CalorieMultiplier"];
     var BMR;
+    var calories_per_day;
     
     if (gender = "male") {
       var BMR = 10*weight + 6.25*height -5*age + 5;
-      return BMR;
     }
     else {
       var BMR = 10*weight + 6.25*height -5*age - 161;
-      return BMR;
     }
+
+    switch(calories) {
+      case "BMR":
+         calories_per_day = BMR;
+        break;
+      case "sedentary":
+         calories_per_day = BMR*1.2;
+        break;
+      case "light":
+         calories_per_day = BMR*1.375;
+        break;
+      case "moderate":
+         calories_per_day = BMR*1.55;
+        break;
+      case "hard":
+         calories_per_day = BMR*1.725;
+        break;
+      case "extreme":
+         calories_per_day = BMR*1.9;
+        break;
+    }
+
+    return calories_per_day;
   }
   document.getElementById("demo").innerHTML = printResults();
   </script>

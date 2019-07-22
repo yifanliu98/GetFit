@@ -26,5 +26,7 @@ Rails.application.routes.draw do
  	post "todo_list_todo_items" => "todo_items#create"
  	get "/nutritional_value" => "nutritional_value#index"
 
+ 	get "/admin" => "admin#index"
+
 end
 

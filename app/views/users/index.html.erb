@@ -5,20 +5,19 @@
             <script type='text/javascript'>
                 (function()
                 {
-  		  		    if( window.localStorage )
+                if( window.localStorage )
                     {
                         if( !localStorage.getItem('firstLoad') )
                         {
                             localStorage['firstLoad'] = true;
                             window.location.reload();
-    				    }  
-    				    else
+                }  
+                else
                             localStorage.removeItem('firstLoad');
                     }
                 })();
             </script>
         <% end %>
-
     	<style>
             .bd-placeholder-img {
         		font-size: 1.125rem;
@@ -42,7 +41,7 @@
   		<br><br>
     	<form class="form-signin" action="/users" method="post">
     		<input type="hidden" name="authenticity_token" value="<% form_authenticity_token%>">
-  			<img class="mb-4" src="logo.png" alt="logo" width="72" height="72">
+  			<img class="mb-4" src="logo.png" alt="logo">
   			<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1><br>
   			<div class="errors">
 				<% if flash[:errors]%>
